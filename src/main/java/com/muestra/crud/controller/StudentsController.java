@@ -38,7 +38,7 @@ public class StudentsController {
     @PostMapping
     public ResponseEntity<StudentsDTO> create(@Valid @RequestBody StudentsDTO dto) throws Exception {
         Students obj = service.save(mapper.map(dto, Students.class));
-        return new ResponseEntity<>(mapper.map(obj, StudentsDTO.class), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.map(obj, StudentsDTO.class), HttpStatus.CREATED);
     }
 
     @PutMapping

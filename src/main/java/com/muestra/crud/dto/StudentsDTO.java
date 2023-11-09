@@ -1,5 +1,6 @@
 package com.muestra.crud.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,21 +15,18 @@ import javax.validation.constraints.Size;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class StudentsDTO {
+
     private Integer idStudent;
-    @NotNull
-    @NotEmpty
-    @Size(min = 5, max = 25)
+
+    @NotNull @NotEmpty @Size(min = 5, max = 25)
     private String name;
-    @NotNull
-    @NotEmpty
-    @Size(min = 5, max = 25)
+    @NotNull @NotEmpty @Size(min = 5, max = 25)
     private String lastName;
-    @Min(value = 1)
-    @NotNull
-    private Integer idcampus;
-    @Min(value = 1)
-    @NotNull
-    private Integer idcareer;
+    @NotNull @Min(value = 1)
+    private Integer idCampus;
+    @NotNull @Min(value = 1)
+    private Integer idCareer;
 
 }
