@@ -1,6 +1,7 @@
 package com.muestra.crud.controller;
 
 import com.muestra.crud.dto.CampusDTO;
+import com.muestra.crud.exception.ModelNotFoundException;
 import com.muestra.crud.model.Campus;
 import com.muestra.crud.service.ICampusService;
 import org.modelmapper.ModelMapper;
@@ -32,25 +33,40 @@ public class CampusController {
     @GetMapping("/{id}")
     public ResponseEntity<CampusDTO> readByID(@PathVariable("id") Integer id) throws Exception {
         CampusDTO obj = mapper.map(service.readById(id), CampusDTO.class);
+            if (obj == null) {
+                throw new Exception("ID NO ENCONTRADO" + id);
+            }
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<CampusDTO> create(@Valid @RequestBody CampusDTO dto) throws Exception {
-        Campus obj = service.save(mapper.map(dto, Campus.class));
-        return new ResponseEntity<>(mapper.map(obj, CampusDTO.class), HttpStatus.CREATED);
+        try {
+            Campus obj = service.save(mapper.map(dto, Campus.class));
+            return new ResponseEntity<>(mapper.map(obj, CampusDTO.class), HttpStatus.CREATED);
+        } catch (Exception e) {
+            throw new ModelNotFoundException("Error al crear el Campus: " + e.getMessage());
+        }
     }
 
     @PutMapping
     public ResponseEntity<CampusDTO> update(@Valid @RequestBody CampusDTO dto) throws Exception {
-        Campus obj = service.update(mapper.map(dto, Campus.class));
-        return new ResponseEntity<>(mapper.map(obj, CampusDTO.class), HttpStatus.OK);
+        try {
+            Campus obj = service.update(mapper.map(dto, Campus.class));
+            return new ResponseEntity<>(mapper.map(obj, CampusDTO.class), HttpStatus.OK);
+        } catch (Exception e) {
+            throw new ModelNotFoundException("Error al actualizar el Campus: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) throws Exception{
-        service.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            service.delete(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            throw new ModelNotFoundException("Error al eliminar el Campus: " + e.getMessage());
+        }
     }
 
 }

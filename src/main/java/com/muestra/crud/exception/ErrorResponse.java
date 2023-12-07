@@ -1,4 +1,4 @@
-package com.mitocode.exception;
+package com.muestra.crud.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

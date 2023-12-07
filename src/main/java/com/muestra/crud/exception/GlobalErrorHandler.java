@@ -1,4 +1,4 @@
-package com.mitocode.exception;
+package com.muestra.crud.exception;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
